@@ -19,7 +19,11 @@ import com.google.android.gms.maps.CameraUpdateFactory
 import com.google.android.gms.maps.GoogleMap
 import com.google.android.gms.maps.OnMapReadyCallback
 import com.google.android.gms.maps.SupportMapFragment
+import com.google.android.gms.maps.model.BitmapDescriptorFactory
 import com.google.android.gms.maps.model.LatLng
+import com.google.android.gms.maps.model.LatLngBounds
+import com.google.android.gms.maps.model.MarkerOptions
+import com.technipixl.filrouge.Model.DataYelp
 import com.technipixl.filrouge.UI.ConnexionYelpImpl
 import com.technipixl.filrouge.databinding.FragmentFoodBinding
 import kotlinx.coroutines.CoroutineScope
@@ -34,6 +38,10 @@ class FoodFragment : Fragment() {
     private lateinit var binding: FragmentFoodBinding
     private val conn by lazy { ConnexionYelpImpl() }
     private lateinit var fusedLocationClient: FusedLocationProviderClient
+    private lateinit var map: GoogleMap
+    private val callback = OnMapReadyCallback { googleMap ->
+        map = googleMap
+    }
     private  var locationCallback: LocationCallback =object : LocationCallback(){
         override fun onLocationResult(locationResult: LocationResult?) {
             locationResult?.lastLocation?.let {
@@ -92,6 +100,7 @@ class FoodFragment : Fragment() {
         tacklocation()
 
     }
+
     private fun centerMap(latitude: Double, longitude: Double) {
 
         val fragment = childFragmentManager.findFragmentById(R.id.fragmentContainerViewMap) as SupportMapFragment?
@@ -99,22 +108,20 @@ class FoodFragment : Fragment() {
             it.moveCamera(CameraUpdateFactory.newLatLng(LatLng(latitude,longitude)))
         })
     }
+
     fun setupyelpdata(latitude:Double,longitude:Double){
 
         CoroutineScope(Dispatchers.IO).launch {
             val response = conn.getSearch(latitude,longitude,20)
             withContext(Dispatchers.Main){
-                if (response != null) {
-                    if (response.isSuccessful){
-                        binding.recyclerView.layoutManager = LinearLayoutManager(requireContext(),LinearLayoutManager.VERTICAL,false)
+                if (response.isSuccessful){
+                    binding.recyclerView.layoutManager = LinearLayoutManager(requireContext(),LinearLayoutManager.VERTICAL,false)
 
-                        response.body()?.let {
-                            binding.recyclerView.adapter = FoodAdapter(it.businesses)
-                        }
+                    response.body()?.let {
+                        binding.recyclerView.adapter = FoodAdapter(it.businesses)
                     }
                 }
             }
         }
     }
-
 }
