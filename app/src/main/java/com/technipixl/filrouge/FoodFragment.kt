@@ -1,40 +1,81 @@
 package com.technipixl.filrouge
 
 import android.Manifest
-import android.app.Activity
 import android.content.Context
 import android.content.pm.PackageManager
 import android.location.LocationManager
 import android.os.Bundle
+import android.os.Looper
 import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.Toast
 import androidx.core.app.ActivityCompat
-import androidx.lifecycle.Transformations.map
 import com.technipixl.filrouge.UI.FoodAdapter
 import androidx.recyclerview.widget.LinearLayoutManager
+import com.google.android.gms.location.*
+import com.google.android.gms.maps.CameraUpdateFactory
 import com.google.android.gms.maps.GoogleMap
 import com.google.android.gms.maps.OnMapReadyCallback
 import com.google.android.gms.maps.SupportMapFragment
+import com.google.android.gms.maps.model.LatLng
 import com.technipixl.filrouge.UI.ConnexionYelpImpl
 import com.technipixl.filrouge.databinding.FragmentFoodBinding
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
+import javax.security.auth.callback.Callback
 
 
 class FoodFragment : Fragment() {
 
     private lateinit var binding: FragmentFoodBinding
     private val conn by lazy { ConnexionYelpImpl() }
+    private lateinit var fusedLocationClient: FusedLocationProviderClient
+    private  var locationCallback: LocationCallback =object : LocationCallback(){
+        override fun onLocationResult(locationResult: LocationResult?) {
+            locationResult?.lastLocation?.let {
+                fusedLocationClient.removeLocationUpdates(this)
+                centerMap(it.latitude,it.longitude)
+                setupyelpdata(it.latitude,it.longitude)
+            }
+        }
+    }
+
+
     companion object{
         const val LOCATION_PERMISSION_REQUEST_CODE = 123
     }
-    private lateinit var map: GoogleMap
+
+    private fun tacklocation(){
+        if (context?.let {
+                ActivityCompat.checkSelfPermission(
+                    it,
+                    Manifest.permission.ACCESS_FINE_LOCATION)
+            } != PackageManager.PERMISSION_GRANTED  && context?.let {
+                ActivityCompat.checkSelfPermission(
+                    it,
+                    Manifest.permission.ACCESS_COARSE_LOCATION)
+            } != PackageManager.PERMISSION_GRANTED ){
+            ActivityCompat.requestPermissions(requireActivity(), arrayOf(
+                Manifest.permission.ACCESS_FINE_LOCATION,
+                Manifest.permission.ACCESS_COARSE_LOCATION), LOCATION_PERMISSION_REQUEST_CODE)
+            return
+        }
+
+        val request = LocationRequest.create()
+        request.interval = 1000
+        request.priority = LocationRequest.PRIORITY_HIGH_ACCURACY
+        fusedLocationClient = LocationServices.getFusedLocationProviderClient(requireActivity())
+        fusedLocationClient.requestLocationUpdates(request, locationCallback, Looper.getMainLooper())
+
+    }
+
+ fun  onPermissionGranted(){
+     tacklocation()
+ }
 
 
     override fun onCreateView(
@@ -48,48 +89,20 @@ class FoodFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-
-        val callback = OnMapReadyCallback{
-
-            map = it
-            setupyelpdata()
-        }
-
-        val mapFragment = childFragmentManager.findFragmentById(R.id.fragmentContainerView) as SupportMapFragment?
-        mapFragment?.getMapAsync(callback)
-
-
+        tacklocation()
 
     }
-    fun setupyelpdata(){
-        val locationManager = activity?.getSystemService(Context.LOCATION_SERVICE) as LocationManager
-        if (context?.let {
-                ActivityCompat.checkSelfPermission(
-                    it,
-                    Manifest.permission.ACCESS_FINE_LOCATION
-                )
-            } != PackageManager.PERMISSION_GRANTED && context?.let {
-                ActivityCompat.checkSelfPermission(
-                    it,
-                    Manifest.permission.ACCESS_COARSE_LOCATION
-                )
-            } != PackageManager.PERMISSION_GRANTED
-        ) {
-            Log.d("missing","permission Manquante")
-            // TODO: Consider calling
-            //    ActivityCompat#requestPermissions
-            // here to request the missing permissions, and then overriding
-            //   public void onRequestPermissionsResult(int requestCode, String[] permissions,
-            //                                          int[] grantResults)
-            // to handle the case where the user grants the permission. See the documentation
-            // for ActivityCompat#requestPermissions for more details.
-            return
-        }
+    private fun centerMap(latitude: Double, longitude: Double) {
 
-           val locationCoord = locationManager.getLastKnownLocation(LocationManager.GPS_PROVIDER)
+        val fragment = childFragmentManager.findFragmentById(R.id.fragmentContainerViewMap) as SupportMapFragment?
+        fragment?.getMapAsync(OnMapReadyCallback{
+            it.moveCamera(CameraUpdateFactory.newLatLng(LatLng(latitude,longitude)))
+        })
+    }
+    fun setupyelpdata(latitude:Double,longitude:Double){
 
         CoroutineScope(Dispatchers.IO).launch {
-            val response = locationCoord?.let { conn.getSearch( it.latitude,it.longitude,20) }
+            val response = conn.getSearch(latitude,longitude,20)
             withContext(Dispatchers.Main){
                 if (response != null) {
                     if (response.isSuccessful){
@@ -103,4 +116,5 @@ class FoodFragment : Fragment() {
             }
         }
     }
+
 }

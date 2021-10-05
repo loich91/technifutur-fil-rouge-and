@@ -1,10 +1,12 @@
 package com.technipixl.filrouge
 
+import android.content.pm.PackageManager
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import androidx.navigation.NavController
 import androidx.navigation.Navigation
 import androidx.navigation.ui.NavigationUI
+import com.technipixl.filrouge.FoodFragment.Companion.LOCATION_PERMISSION_REQUEST_CODE
 import com.technipixl.filrouge.databinding.ActivityHomeBinding
 
 class HomeActivity : AppCompatActivity() {
@@ -24,5 +26,18 @@ class HomeActivity : AppCompatActivity() {
     }
     private fun setupBottomNavigation() {
         NavigationUI.setupWithNavController(binding.bottomNavigationView, navController)
+    }
+
+    override fun onRequestPermissionsResult(
+        requestCode: Int,
+        permissions: Array<out String>,
+        grantResults: IntArray
+    ) {
+        super.onRequestPermissionsResult(requestCode, permissions, grantResults)
+
+        if(requestCode==LOCATION_PERMISSION_REQUEST_CODE && grantResults.first() == PackageManager.PERMISSION_GRANTED) {
+            val fragment = supportFragmentManager.findFragmentById(R.id.foodFragment) as FoodFragment?
+            fragment?.onPermissionGranted()
+        }
     }
 }

@@ -1,10 +1,13 @@
 package com.technipixl.filrouge.UI
 
+import android.graphics.drawable.Drawable
 import android.view.LayoutInflater
 import android.view.ViewGroup
+import androidx.core.net.toUri
 import androidx.recyclerview.widget.RecyclerView
 import com.squareup.picasso.Picasso
 import com.technipixl.filrouge.Model.Businesse
+import com.technipixl.filrouge.R
 import com.technipixl.filrouge.databinding.FoodCellBinding
 import kotlin.math.round
 
@@ -19,10 +22,11 @@ class FoodAdapter(val foodList :List<Businesse>):RecyclerView.Adapter<FoodAdapte
             binding.villeText.text = foodOne.location.city
             val distanceTransform = round((foodOne.distance/1000)*100)/100
             binding.distanceText.text =  distanceTransform.toString()+" km"
-            Picasso.get()
-                .load(foodOne.image_url)
-                .into(binding.imageRestaurant)
-
+            if (foodOne.image_url.isNotEmpty()) {
+                Picasso.get()
+                    .load(foodOne.image_url)
+                    .into(binding.imageRestaurant)
+            }
         }
 
     }
