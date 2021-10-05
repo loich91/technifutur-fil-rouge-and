@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="DesignSurface">
+    <option name="filePathToZoomLevelMap">
+      <map>
+        <entry key="..\:/Users/loic/Documents/Projet-Fil-rouge-Android-master/app/src/main/res/drawable-v24/ic_launcher_foreground.xml" value="0.22135416666666666" />
+        <entry key="..\:/Users/loic/Documents/Projet-Fil-rouge-Android-master/app/src/main/res/drawable-xxhdpi/tab_indicator_default.xml" value="0.22135416666666666" />
+        <entry key="..\:/Users/loic/Documents/Projet-Fil-rouge-Android-master/app/src/main/res/drawable-xxhdpi/tab_indicator_selected.xml" value="0.22135416666666666" />
+        <entry key="..\:/Users/loic/Documents/Projet-Fil-rouge-Android-master/app/src/main/res/drawable-xxhdpi/tab_selector.xml" value="0.21875" />
+        <entry key="..\:/Users/loic/Documents/Projet-Fil-rouge-Android-master/app/src/main/res/drawable/background_login_round.xml" value="0.22135416666666666" />
+        <entry key="..\:/Users/loic/Documents/Projet-Fil-rouge-Android-master/app/src/main/res/drawable/btn_background_none.xml" value="0.22135416666666666" />
+        <entry key="..\:/Users/loic/Documents/Projet-Fil-rouge-Android-master/app/src/main/res/drawable/edit_text_background.xml" value="0.22135416666666666" />
+        <entry key="..\:/Users/loic/Documents/Projet-Fil-rouge-Android-master/app/src/main/res/drawable/ic_launcher_background.xml" value="0.22135416666666666" />
+        <entry key="..\:/Users/loic/Documents/Projet-Fil-rouge-Android-master/app/src/main/res/drawable/tab_selector.xml" value="0.22135416666666666" />
+        <entry key="..\:/Users/loic/Documents/Projet-Fil-rouge-Android-master/app/src/main/res/layout/activity_home.xml" value="0.20520833333333333" />
+        <entry key="..\:/Users/loic/Documents/Projet-Fil-rouge-Android-master/app/src/main/res/layout/activity_main.xml" value="0.22327898550724637" />
+        <entry key="..\:/Users/loic/Documents/Projet-Fil-rouge-Android-master/app/src/main/res/layout/authentification_main.xml" value="0.20520833333333333" />
+        <entry key="..\:/Users/loic/Documents/Projet-Fil-rouge-Android-master/app/src/main/res/layout/foos_cell.xml" value="0.14175724637681159" />
+        <entry key="..\:/Users/loic/Documents/Projet-Fil-rouge-Android-master/app/src/main/res/layout/fragment_food.xml" value="0.20520833333333333" />
+        <entry key="..\:/Users/loic/Documents/Projet-Fil-rouge-Android-master/app/src/main/res/layout/fragment_fun.xml" value="0.1956521739130435" />
+        <entry key="..\:/Users/loic/Documents/Projet-Fil-rouge-Android-master/app/src/main/res/layout/fragment_home.xml" value="0.27366863905325445" />
+        <entry key="..\:/Users/loic/Documents/Projet-Fil-rouge-Android-master/app/src/main/res/layout/fragment_move.xml" value="0.20520833333333333" />
+        <entry key="..\:/Users/loic/Documents/Projet-Fil-rouge-Android-master/app/src/main/res/layout/home_cell.xml" value="0.1956521739130435" />
+        <entry key="..\:/Users/loic/Documents/Projet-Fil-rouge-Android-master/app/src/main/res/layout/home_viewer.xml" value="0.17346014492753623" />
+        <entry key="..\:/Users/loic/Documents/Projet-Fil-rouge-Android-master/app/src/main/res/layout/joke_cell.xml" value="0.18840579710144928" />
+        <entry key="..\:/Users/loic/Documents/Projet-Fil-rouge-Android-master/app/src/main/res/menu/nav_menu.xml" value="0.20520833333333333" />
+      </map>
+    </option>
+  </component>
+  <component name="ProjectRootManager" version="2" languageLevel="JDK_1_8" default="true" project-jdk-name="1.8" project-jdk-type="JavaSDK">
+    <output url="file://$PROJECT_DIR$/build/classes" />
+  </component>
+  <component name="ProjectType">
+    <option name="id" value="Android" />
+  </component>
+</project>

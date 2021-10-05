@@ -1,0 +1,18 @@
+<resources>
+    <string name="app_name">FilRouge</string>
+    <string name="se_connecter">Se connecter</string>
+    <string name="jeankew">jeankew</string>
+    <string name="email_hint">... ton login ou email</string>
+    <string name="password_hint">... ton mot de passe</string>
+    <string name="kmon_bubble_title">Hey ! Komen ksé ?!</string>
+    <string name="connecte_toi">connecte toi</string>
+    <string name="bulle_bd">bulle Bd</string>
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="home_menu_title">Acceuil</string>
+    <string name="food_menu_title">Manger</string>
+    <string name="fun_menu_title">Rigoler</string>
+    <string name="move_menu_title">Bouger</string>
+    <string name="jean_kevin_text">Jean-Kevin !</string>
+    <string name="coucou_text">Coucou</string>
+</resources>

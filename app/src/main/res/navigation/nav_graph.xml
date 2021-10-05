@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/nav_graph"
+    app:startDestination="@id/homeFragment">
+
+    <fragment
+        android:id="@+id/homeFragment"
+        android:name="com.technipixl.filrouge.HomeFragment"
+        android:label="fragment_home"
+        tools:layout="@layout/fragment_home" />
+    <fragment
+        android:id="@+id/foodFragment"
+        android:name="com.technipixl.filrouge.FoodFragment"
+        android:label="fragment_food"
+        tools:layout="@layout/fragment_food" />
+    <fragment
+        android:id="@+id/funFragment"
+        android:name="com.technipixl.filrouge.FunFragment"
+        android:label="fragment_fun"
+        tools:layout="@layout/fragment_fun" />
+    <fragment
+        android:id="@+id/MoveFragment"
+        android:name="com.technipixl.filrouge.MoveFragment"
+        android:label="fragment_move"
+        tools:layout="@layout/fragment_move" />
+</navigation>
