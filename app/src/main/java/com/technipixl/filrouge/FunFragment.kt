@@ -43,6 +43,7 @@ class FunFragment : Fragment() {
                 if (response.isSuccessful){
                     response?.let {
                         it.body()?.let {
+
                             binding.recyclerView.layoutManager = LinearLayoutManager(requireContext(),LinearLayoutManager.VERTICAL,false)
                             binding.recyclerView.adapter = JokeAdpater(it?.value)
                         }

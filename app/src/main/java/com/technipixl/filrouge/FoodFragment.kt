@@ -23,6 +23,7 @@ import com.google.android.gms.maps.model.BitmapDescriptorFactory
 import com.google.android.gms.maps.model.LatLng
 import com.google.android.gms.maps.model.LatLngBounds
 import com.google.android.gms.maps.model.MarkerOptions
+import com.technipixl.filrouge.Model.Businesse
 import com.technipixl.filrouge.Model.DataYelp
 import com.technipixl.filrouge.UI.ConnexionYelpImpl
 import com.technipixl.filrouge.databinding.FragmentFoodBinding
@@ -38,10 +39,8 @@ class FoodFragment : Fragment() {
     private lateinit var binding: FragmentFoodBinding
     private val conn by lazy { ConnexionYelpImpl() }
     private lateinit var fusedLocationClient: FusedLocationProviderClient
-    private lateinit var map: GoogleMap
-    private val callback = OnMapReadyCallback { googleMap ->
-        map = googleMap
-    }
+    private lateinit var map:GoogleMap
+
     private  var locationCallback: LocationCallback =object : LocationCallback(){
         override fun onLocationResult(locationResult: LocationResult?) {
             locationResult?.lastLocation?.let {
@@ -97,7 +96,11 @@ class FoodFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        tacklocation()
+        val fragment = childFragmentManager.findFragmentById(R.id.fragmentContainerViewMap) as SupportMapFragment?
+        fragment?.getMapAsync(OnMapReadyCallback{
+            map = it
+            tacklocation()
+        })
 
     }
 
@@ -107,6 +110,16 @@ class FoodFragment : Fragment() {
         fragment?.getMapAsync(OnMapReadyCallback{
             it.moveCamera(CameraUpdateFactory.newLatLng(LatLng(latitude,longitude)))
         })
+    }
+    fun addMarquer(response:List<Businesse>){
+        response.forEach { dataBusiness->
+            var lat = dataBusiness.coordinates.latitude
+            var long = dataBusiness.coordinates.longitude
+            var title = dataBusiness.name
+            var coord = LatLng(lat,long)
+            map.addMarker(MarkerOptions().position(coord).title(title))
+            map.moveCamera(CameraUpdateFactory.newLatLng(coord))
+        }
     }
 
     fun setupyelpdata(latitude:Double,longitude:Double){
@@ -119,6 +132,7 @@ class FoodFragment : Fragment() {
 
                     response.body()?.let {
                         binding.recyclerView.adapter = FoodAdapter(it.businesses)
+                        addMarquer(it.businesses)
                     }
                 }
             }
