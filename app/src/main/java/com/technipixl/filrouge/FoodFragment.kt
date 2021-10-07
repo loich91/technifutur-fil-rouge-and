@@ -112,14 +112,26 @@ class FoodFragment : Fragment() {
         })
     }
     fun addMarquer(response:List<Businesse>){
+        val boundBuild = LatLngBounds.builder()
         response.forEach { dataBusiness->
             var lat = dataBusiness.coordinates.latitude
             var long = dataBusiness.coordinates.longitude
             var title = dataBusiness.name
+
             var coord = LatLng(lat,long)
-            map.addMarker(MarkerOptions().position(coord).title(title))
-            map.moveCamera(CameraUpdateFactory.newLatLng(coord))
+            addMarker(lat,long,title)
+            boundBuild.include(coord)
         }
+       val width = getResources().getDisplayMetrics().widthPixels
+        val height = getResources().getDisplayMetrics().heightPixels
+       val  padding =  (width * 0.20) .toInt()
+        map.moveCamera(CameraUpdateFactory.newLatLngBounds(boundBuild.build(),width, height, padding))
+    }
+    private fun addMarker(latitude: Double, longitude: Double, title: String) {
+        val markerOptions = MarkerOptions().position(LatLng(latitude, longitude))
+            .title(title)
+            .icon(BitmapDescriptorFactory.fromResource(R.drawable.ico_pin_pizza))
+        map.addMarker(markerOptions)
     }
 
     fun setupyelpdata(latitude:Double,longitude:Double){
