@@ -1,5 +1,9 @@
 package com.technipixl.filrouge.Model
 
+import android.os.Parcelable
+import kotlinx.parcelize.Parcelize
+
+@Parcelize
 data class Businesse(
     val alias: String,
     val categories: List<Category>,
@@ -15,6 +19,5 @@ data class Businesse(
     val price: String,
     val rating: Double,
     val review_count: Int,
-    val transactions: List<Any>,
     val url: String
-)
+) : Parcelable

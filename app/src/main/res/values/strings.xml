@@ -15,4 +15,6 @@
     <string name="move_menu_title">Bouger</string>
     <string name="jean_kevin_text">Jean-Kevin !</string>
     <string name="coucou_text">Coucou</string>
+    <string name="autour_de_moi">autour de moi</string>
+    <string name="favoris">favoris</string>
 </resources>

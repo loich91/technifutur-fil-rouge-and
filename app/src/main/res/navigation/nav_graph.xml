@@ -14,7 +14,11 @@
         android:id="@+id/foodFragment"
         android:name="com.technipixl.filrouge.FoodFragment"
         android:label="fragment_food"
-        tools:layout="@layout/fragment_food" />
+        tools:layout="@layout/fragment_food" >
+        <action
+            android:id="@+id/action_foodFragment_to_detailFoodFragment"
+            app:destination="@id/detailFoodFragment" />
+    </fragment>
     <fragment
         android:id="@+id/funFragment"
         android:name="com.technipixl.filrouge.FunFragment"
@@ -25,4 +29,13 @@
         android:name="com.technipixl.filrouge.MoveFragment"
         android:label="fragment_move"
         tools:layout="@layout/fragment_move" />
+    <fragment
+        android:id="@+id/detailFoodFragment"
+        android:name="com.technipixl.filrouge.DetailFoodFragment"
+        android:label="fragment_detail_food"
+        tools:layout="@layout/fragment_detail_food" >
+        <argument
+            android:name="business"
+            app:argType="com.technipixl.filrouge.Model.Businesse" />
+    </fragment>
 </navigation>

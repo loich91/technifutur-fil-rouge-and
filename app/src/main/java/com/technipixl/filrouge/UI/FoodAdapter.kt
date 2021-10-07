@@ -13,9 +13,13 @@ import kotlin.math.round
 
 
 private lateinit var binding:FoodCellBinding
-class FoodAdapter(val foodList :List<Businesse>):RecyclerView.Adapter<FoodAdapter.FoodViewHolder>(){
+class FoodAdapter(val foodList :List<Businesse>,val listener:OnclickFoodListener):RecyclerView.Adapter<FoodAdapter.FoodViewHolder>(){
+    interface OnclickFoodListener {
+        fun onclickFoodListener(businesse: Businesse)
+    }
+
     class FoodViewHolder(binding:FoodCellBinding):RecyclerView.ViewHolder(binding.root){
-        fun bind(foodOne:Businesse){
+        fun bind(foodOne:Businesse,listener: OnclickFoodListener){
 
             binding.Restaurantname.text = foodOne.name
             binding.textType.text = foodOne.categories.firstOrNull()?.title
@@ -27,9 +31,14 @@ class FoodAdapter(val foodList :List<Businesse>):RecyclerView.Adapter<FoodAdapte
                     .load(foodOne.image_url)
                     .into(binding.imageRestaurant)
             }
+            itemView.setOnClickListener {
+                listener.onclickFoodListener(foodOne)
+            }
+
         }
 
     }
+
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): FoodViewHolder {
         binding = FoodCellBinding.inflate(LayoutInflater.from(parent.context),parent,false)
@@ -37,7 +46,7 @@ class FoodAdapter(val foodList :List<Businesse>):RecyclerView.Adapter<FoodAdapte
     }
 
     override fun onBindViewHolder(holder: FoodViewHolder, position: Int) {
-        holder.bind(foodList[position])
+        holder.bind(foodList[position],listener )
     }
 
     override fun getItemCount(): Int {
@@ -45,3 +54,5 @@ class FoodAdapter(val foodList :List<Businesse>):RecyclerView.Adapter<FoodAdapte
     }
 
 }
+
+

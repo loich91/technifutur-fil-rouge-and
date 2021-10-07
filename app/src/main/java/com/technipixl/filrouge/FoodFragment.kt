@@ -3,6 +3,8 @@ package com.technipixl.filrouge
 import android.Manifest
 import android.content.Context
 import android.content.pm.PackageManager
+import android.graphics.Color
+import android.location.Location
 import android.location.LocationManager
 import android.os.Bundle
 import android.os.Looper
@@ -11,7 +13,11 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.ImageView
 import androidx.core.app.ActivityCompat
+import androidx.core.content.ContextCompat
+import androidx.core.content.res.ResourcesCompat
+import androidx.navigation.fragment.findNavController
 import com.technipixl.filrouge.UI.FoodAdapter
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.google.android.gms.location.*
@@ -34,7 +40,7 @@ import kotlinx.coroutines.withContext
 import javax.security.auth.callback.Callback
 
 
-class FoodFragment : Fragment() {
+class FoodFragment : Fragment(),FoodAdapter.OnclickFoodListener {
 
     private lateinit var binding: FragmentFoodBinding
     private val conn by lazy { ConnexionYelpImpl() }
@@ -43,10 +49,24 @@ class FoodFragment : Fragment() {
 
     private  var locationCallback: LocationCallback =object : LocationCallback(){
         override fun onLocationResult(locationResult: LocationResult?) {
-            locationResult?.lastLocation?.let {
+            locationResult?.lastLocation?.let {location->
                 fusedLocationClient.removeLocationUpdates(this)
-                centerMap(it.latitude,it.longitude)
-                setupyelpdata(it.latitude,it.longitude)
+                centerMap(location.latitude,location.longitude)
+                setupyelpdata(location.latitude,location.longitude)
+                binding.btn1SelectionFood.setOnClickListener {
+                    binding.btn1SelectionFood.background = ResourcesCompat.getDrawable(resources, R.drawable.background_button, null)
+                    binding.btn2SelectionFoodFavorite.background = null
+                    binding.btn2SelectionFoodFavorite.setTextColor(ContextCompat.getColor(requireContext(),R.color.black))
+                    binding.btn1SelectionFood.setTextColor(ContextCompat.getColor(requireContext(),R.color.pink))
+                    setupyelpdata(location.latitude,location.longitude)
+
+                }
+                binding.btn2SelectionFoodFavorite.setOnClickListener {
+                    binding.btn2SelectionFoodFavorite.background = ResourcesCompat.getDrawable(resources, R.drawable.background_button, null)
+                    binding.btn1SelectionFood.background = null
+                    binding.btn2SelectionFoodFavorite.setTextColor(ContextCompat.getColor(requireContext(),R.color.pink))
+                    binding.btn1SelectionFood.setTextColor(ContextCompat.getColor(requireContext(),R.color.black))
+                }
             }
         }
     }
@@ -114,11 +134,11 @@ class FoodFragment : Fragment() {
     fun addMarquer(response:List<Businesse>){
         val boundBuild = LatLngBounds.builder()
         response.forEach { dataBusiness->
-            var lat = dataBusiness.coordinates.latitude
-            var long = dataBusiness.coordinates.longitude
-            var title = dataBusiness.name
+            val lat = dataBusiness.coordinates.latitude
+            val long = dataBusiness.coordinates.longitude
+            val title = dataBusiness.name
 
-            var coord = LatLng(lat,long)
+            val coord = LatLng(lat,long)
             addMarker(lat,long,title)
             boundBuild.include(coord)
         }
@@ -143,11 +163,21 @@ class FoodFragment : Fragment() {
                     binding.recyclerView.layoutManager = LinearLayoutManager(requireContext(),LinearLayoutManager.VERTICAL,false)
 
                     response.body()?.let {
-                        binding.recyclerView.adapter = FoodAdapter(it.businesses)
+                        binding.recyclerView.adapter = FoodAdapter(it.businesses,this@FoodFragment)
                         addMarquer(it.businesses)
                     }
                 }
             }
         }
     }
+    fun setupDbyelpData(){
+
+    }
+
+    override fun onclickFoodListener(businesse: Businesse) {
+        val action = FoodFragmentDirections.actionFoodFragmentToDetailFoodFragment(businesse)
+        findNavController().navigate(action)
+    }
+
+
 }
