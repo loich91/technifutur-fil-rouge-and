@@ -29,6 +29,8 @@ import com.google.android.gms.maps.model.BitmapDescriptorFactory
 import com.google.android.gms.maps.model.LatLng
 import com.google.android.gms.maps.model.LatLngBounds
 import com.google.android.gms.maps.model.MarkerOptions
+import com.technipixl.filrouge.DBFood.Database.DatabaseFood
+import com.technipixl.filrouge.DBFood.model.BusineseDb
 import com.technipixl.filrouge.Model.Businesse
 import com.technipixl.filrouge.Model.DataYelp
 import com.technipixl.filrouge.UI.ConnexionYelpImpl
@@ -170,7 +172,13 @@ class FoodFragment : Fragment(),FoodAdapter.OnclickFoodListener {
             }
         }
     }
-    fun setupDbyelpData(){
+    fun setupDbyelpDataDb(){
+        DatabaseFood.getDb(requireContext()).foodDao().getFavoriteFood().observe(viewLifecycleOwner){listDb->
+            val listbusi = BusinesseMapper().transfortoBusinesse(listDb)
+            binding.recyclerView.layoutManager = LinearLayoutManager(requireContext(),LinearLayoutManager.VERTICAL,false)
+            binding.recyclerView.adapter = listbusi?.let { FoodAdapter(it,this@FoodFragment) }
+            listbusi?.let { addMarquer(it) }
+        }
 
     }
 

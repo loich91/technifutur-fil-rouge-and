@@ -13,7 +13,7 @@ import kotlin.math.round
 
 
 private lateinit var binding:FoodCellBinding
-class FoodAdapter(val foodList :List<Businesse>,val listener:OnclickFoodListener):RecyclerView.Adapter<FoodAdapter.FoodViewHolder>(){
+class FoodAdapter(val foodList :List<Businesse> ,val listener:OnclickFoodListener):RecyclerView.Adapter<FoodAdapter.FoodViewHolder>(){
     interface OnclickFoodListener {
         fun onclickFoodListener(businesse: Businesse)
     }
