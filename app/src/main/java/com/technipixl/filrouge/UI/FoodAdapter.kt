@@ -24,7 +24,7 @@ class FoodAdapter(val foodList :List<Businesse> ,val listener:OnclickFoodListene
             binding.Restaurantname.text = foodOne.name
             binding.textType.text = foodOne.categories.firstOrNull()?.title
             binding.villeText.text = foodOne.location.city
-            val distanceTransform = round((foodOne.distance/1000)*100)/100
+            val distanceTransform = round((foodOne.distance /1000)*100)/100
             binding.distanceText.text =  distanceTransform.toString()+" km"
             if (foodOne.image_url.isNotEmpty()) {
                 Picasso.get()

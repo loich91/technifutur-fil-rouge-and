@@ -1,19 +1,13 @@
 package com.technipixl.filrouge
 
 import android.Manifest
-import android.content.Context
 import android.content.pm.PackageManager
-import android.graphics.Color
-import android.location.Location
-import android.location.LocationManager
 import android.os.Bundle
 import android.os.Looper
-import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.ImageView
 import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
 import androidx.core.content.res.ResourcesCompat
@@ -30,16 +24,13 @@ import com.google.android.gms.maps.model.LatLng
 import com.google.android.gms.maps.model.LatLngBounds
 import com.google.android.gms.maps.model.MarkerOptions
 import com.technipixl.filrouge.DBFood.Database.DatabaseFood
-import com.technipixl.filrouge.DBFood.model.BusineseDb
 import com.technipixl.filrouge.Model.Businesse
-import com.technipixl.filrouge.Model.DataYelp
 import com.technipixl.filrouge.UI.ConnexionYelpImpl
 import com.technipixl.filrouge.databinding.FragmentFoodBinding
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
-import javax.security.auth.callback.Callback
 
 
 class FoodFragment : Fragment(),FoodAdapter.OnclickFoodListener {
@@ -68,6 +59,7 @@ class FoodFragment : Fragment(),FoodAdapter.OnclickFoodListener {
                     binding.btn1SelectionFood.background = null
                     binding.btn2SelectionFoodFavorite.setTextColor(ContextCompat.getColor(requireContext(),R.color.pink))
                     binding.btn1SelectionFood.setTextColor(ContextCompat.getColor(requireContext(),R.color.black))
+                    setupDbyelpDataDb()
                 }
             }
         }
@@ -174,7 +166,12 @@ class FoodFragment : Fragment(),FoodAdapter.OnclickFoodListener {
     }
     fun setupDbyelpDataDb(){
         DatabaseFood.getDb(requireContext()).foodDao().getFavoriteFood().observe(viewLifecycleOwner){listDb->
-            val listbusi = BusinesseMapper().transfortoBusinesse(listDb)
+            val listbusi = mutableListOf<Businesse>()
+            listDb.forEach { busiwithcat->
+                val result = BusinesseMapper().transfortoBusinesse(busiwithcat)
+                listbusi.add(result)
+
+            }
             binding.recyclerView.layoutManager = LinearLayoutManager(requireContext(),LinearLayoutManager.VERTICAL,false)
             binding.recyclerView.adapter = listbusi?.let { FoodAdapter(it,this@FoodFragment) }
             listbusi?.let { addMarquer(it) }

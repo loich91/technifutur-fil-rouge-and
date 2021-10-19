@@ -5,9 +5,8 @@ import androidx.room.PrimaryKey
 
 @Entity
 class CoordinateDb (
-    @PrimaryKey(autoGenerate = true)
-    val idCoord :Int,
-    val latitude: Double,
-    val longitude: Double
+
+    val latitude: Double?,
+    val longitude: Double?
 
         )
