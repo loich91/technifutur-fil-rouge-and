@@ -178,7 +178,12 @@ class FoodFragment : Fragment(),FoodAdapter.OnclickFoodListener {
             binding.recyclerView.layoutManager = LinearLayoutManager(requireContext(),LinearLayoutManager.VERTICAL,false)
             binding.recyclerView.adapter = FoodAdapter(listbusi,this@FoodFragment)
             if (listbusi.isNotEmpty()){
+                map.clear()
                 addMarquer(listbusi)
+            }
+            else {
+                map.clear()
+
             }
 
         }
