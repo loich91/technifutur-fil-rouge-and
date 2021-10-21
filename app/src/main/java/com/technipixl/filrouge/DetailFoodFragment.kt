@@ -1,6 +1,7 @@
 package com.technipixl.filrouge
 
 import android.Manifest
+import android.annotation.SuppressLint
 import android.content.pm.PackageManager
 import android.os.Bundle
 import android.os.Looper
@@ -71,11 +72,12 @@ class DetailFoodFragment : Fragment() {
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View? {
+    ): View {
        binding = FragmentDetailFoodBinding.inflate(layoutInflater)
         return binding.root
     }
 
+    @SuppressLint("SetTextI18n")
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         binding.nameFoodRestau.text = args.business.name

@@ -3,10 +3,10 @@ package com.technipixl.filrouge.DBFood.model
 import androidx.room.*
 import com.technipixl.filrouge.Model.Businesse
 
+
 @Entity(primaryKeys = ["idDb","idCat"])
 class BusinesseCategoryDb (
-    @PrimaryKey(autoGenerate = true)
-    val busineseCarctId:Int,
+
     val idDb:Int,
     val idCat:Int
         )

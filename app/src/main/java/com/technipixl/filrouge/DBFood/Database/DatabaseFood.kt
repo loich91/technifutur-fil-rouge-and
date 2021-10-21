@@ -6,11 +6,12 @@ import androidx.room.Room
 import androidx.room.RoomDatabase
 import com.technipixl.filrouge.DBFood.Dao.FoodDao
 import com.technipixl.filrouge.DBFood.model.BusineseDb
+import com.technipixl.filrouge.DBFood.model.BusinesseCategoryDb
 import com.technipixl.filrouge.DBFood.model.CategoryDb
 import com.technipixl.filrouge.DBFood.model.CoordinateDb
 
 
-@Database(entities = arrayOf(BusineseDb::class,CategoryDb::class),version = 1)
+@Database(entities = [BusineseDb::class, CategoryDb::class, BusinesseCategoryDb::class],version = 1)
 abstract class DatabaseFood:RoomDatabase() {
     abstract fun foodDao():FoodDao
     companion object {

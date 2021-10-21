@@ -40,7 +40,7 @@ class FoodFragment : Fragment(),FoodAdapter.OnclickFoodListener {
     private lateinit var fusedLocationClient: FusedLocationProviderClient
     private lateinit var map:GoogleMap
 
-    private  var locationCallback: LocationCallback =object : LocationCallback(){
+    private  var locationCallback: LocationCallback = object : LocationCallback(){
         override fun onLocationResult(locationResult: LocationResult?) {
             locationResult?.lastLocation?.let {location->
                 fusedLocationClient.removeLocationUpdates(this)
@@ -55,6 +55,8 @@ class FoodFragment : Fragment(),FoodAdapter.OnclickFoodListener {
 
                 }
                 binding.btn2SelectionFoodFavorite.setOnClickListener {
+
+
                     binding.btn2SelectionFoodFavorite.background = ResourcesCompat.getDrawable(resources, R.drawable.background_button, null)
                     binding.btn1SelectionFood.background = null
                     binding.btn2SelectionFoodFavorite.setTextColor(ContextCompat.getColor(requireContext(),R.color.pink))
@@ -136,8 +138,8 @@ class FoodFragment : Fragment(),FoodAdapter.OnclickFoodListener {
             addMarker(lat,long,title)
             boundBuild.include(coord)
         }
-       val width = getResources().getDisplayMetrics().widthPixels
-        val height = getResources().getDisplayMetrics().heightPixels
+       val width = resources.displayMetrics.widthPixels
+        val height = resources.displayMetrics.heightPixels
        val  padding =  (width * 0.20) .toInt()
         map.moveCamera(CameraUpdateFactory.newLatLngBounds(boundBuild.build(),width, height, padding))
     }
@@ -164,17 +166,21 @@ class FoodFragment : Fragment(),FoodAdapter.OnclickFoodListener {
             }
         }
     }
+
     fun setupDbyelpDataDb(){
         DatabaseFood.getDb(requireContext()).foodDao().getFavoriteFood().observe(viewLifecycleOwner){listDb->
-            val listbusi = mutableListOf<Businesse>()
+            var listbusi = listOf<Businesse>()
             listDb.forEach { busiwithcat->
                 val result = BusinesseMapper().transfortoBusinesse(busiwithcat)
-                listbusi.add(result)
+                listbusi= listOf(result)
 
             }
             binding.recyclerView.layoutManager = LinearLayoutManager(requireContext(),LinearLayoutManager.VERTICAL,false)
-            binding.recyclerView.adapter = listbusi?.let { FoodAdapter(it,this@FoodFragment) }
-            listbusi?.let { addMarquer(it) }
+            binding.recyclerView.adapter = FoodAdapter(listbusi,this@FoodFragment)
+            if (listbusi.isNotEmpty()){
+                addMarquer(listbusi)
+            }
+
         }
 
     }
