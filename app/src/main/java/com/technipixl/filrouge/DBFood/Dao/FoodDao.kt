@@ -12,6 +12,8 @@ import com.technipixl.filrouge.DBFood.model.BusinesswithCategory
 interface FoodDao {
     @Query("Select * From BusineseDb")
     fun getFavoriteFood(): LiveData<List<BusinesswithCategory>>
+    @Query("Select * From BusineseDb")
+    fun getFavoriteFoodBusi(): LiveData<List<BusineseDb>>
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     suspend fun insertDataFood(busineseDb: BusineseDb): Long

@@ -20,7 +20,14 @@ import com.google.android.gms.maps.model.BitmapDescriptorFactory
 import com.google.android.gms.maps.model.LatLng
 import com.google.android.gms.maps.model.LatLngBounds
 import com.google.android.gms.maps.model.MarkerOptions
+import com.technipixl.filrouge.DBFood.Database.DatabaseFood
+import com.technipixl.filrouge.DBFood.model.BusineseDb
+import com.technipixl.filrouge.Model.Businesse
 import com.technipixl.filrouge.databinding.FragmentDetailFoodBinding
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.coroutineScope
+import kotlinx.coroutines.launch
 import kotlin.math.roundToInt
 
 
@@ -93,6 +100,11 @@ class DetailFoodFragment : Fragment() {
             map = it
             tacklocation()
         })
+        binding.addFavoriteType.setOnClickListener {
+
+            val result = BusinesseMapper().transformToBusineseDb(args.business)
+
+        }
     }
     fun addMarquer(latitude: Double,longitude: Double,title: String){
         val boundBuild = LatLngBounds.builder()
@@ -110,6 +122,18 @@ class DetailFoodFragment : Fragment() {
             .title(title)
             .icon(BitmapDescriptorFactory.fromResource(R.drawable.ico_pin_pizza))
         map.addMarker(markerOptions)
+    }
+    private fun addFavorite(args: DetailFoodFragmentArgs) {
+        binding.ratingbar.rating = args.business.rating.toFloat()
+        binding.addressTextDetail.text = args.business.location.address1
+        binding.villeZip.text = args.business.location.city + " " +args.business.location.state+" "+ args.business.location.zip_code
+
+    }
+    private fun recuplistDb(): List<BusineseDb>? {
+        DatabaseFood.getDb(requireContext()).foodDao().getFavoriteFoodBusi().observe(viewLifecycleOwner) { listDb ->
+            val listBusiDb = listDb
+            return listBusiDb
+        }
     }
 
 }
