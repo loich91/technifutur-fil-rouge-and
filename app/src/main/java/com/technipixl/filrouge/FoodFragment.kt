@@ -169,15 +169,12 @@ class FoodFragment : Fragment(),FoodAdapter.OnclickFoodListener {
 
     fun setupDbyelpDataDb(){
         DatabaseFood.getDb(requireContext()).foodDao().getFavoriteFood().observe(viewLifecycleOwner){listDb->
-            var listbusi = listOf<Businesse>()
-            listDb.forEach { busiwithcat->
-                val result = BusinesseMapper().transfortoBusinesse(busiwithcat)
-                listbusi= listOf(result)
 
-            }
+
+            var listbusi = listDb.map { BusinesseMapper().transfortoBusinesse(it) }
             binding.recyclerView.layoutManager = LinearLayoutManager(requireContext(),LinearLayoutManager.VERTICAL,false)
-            binding.recyclerView.adapter = FoodAdapter(listbusi,this@FoodFragment)
-            if (listbusi.isNotEmpty()){
+            binding.recyclerView.adapter =  FoodAdapter(listbusi,this@FoodFragment)
+            if (listbusi.isNotEmpty() == true){
                 map.clear()
                 addMarquer(listbusi)
             }

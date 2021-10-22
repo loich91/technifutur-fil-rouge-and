@@ -11,6 +11,7 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.core.app.ActivityCompat
 import androidx.lifecycle.LiveData
+import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
 import com.google.android.gms.location.*
 import com.google.android.gms.maps.CameraUpdateFactory
@@ -113,8 +114,8 @@ class DetailFoodFragment : Fragment() {
             addMarker(latitude,longitude,title)
             boundBuild.include(coord)
 
-        val width = getResources().getDisplayMetrics().widthPixels
-        val height = getResources().getDisplayMetrics().heightPixels
+        val width = resources.displayMetrics.widthPixels
+        val height = resources.displayMetrics.heightPixels
         val  padding =  (width * 0.10) .toInt()
         map.moveCamera(CameraUpdateFactory.newLatLngBounds(boundBuild.build(),width, height, padding))
     }
@@ -148,6 +149,7 @@ class DetailFoodFragment : Fragment() {
                 else {
                     withContext(Dispatchers.IO){
                         DatabaseFood.getDb(requireContext()).foodDao().deleteById(busineseDb.id)
+
                     }
                 }
 
