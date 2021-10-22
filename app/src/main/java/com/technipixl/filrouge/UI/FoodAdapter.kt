@@ -1,5 +1,6 @@
 package com.technipixl.filrouge.UI
 
+import android.annotation.SuppressLint
 import android.graphics.drawable.Drawable
 import android.view.LayoutInflater
 import android.view.ViewGroup
@@ -19,7 +20,8 @@ class FoodAdapter(val foodList :List<Businesse> ,val listener:OnclickFoodListene
     }
 
     class FoodViewHolder(binding:FoodCellBinding):RecyclerView.ViewHolder(binding.root){
-        fun bind(foodOne:Businesse,listener: OnclickFoodListener){
+        @SuppressLint("SetTextI18n")
+        fun bind(foodOne:Businesse, listener: OnclickFoodListener){
 
             binding.Restaurantname.text = foodOne.name
             binding.textType.text = foodOne.categories.firstOrNull()?.title

@@ -10,6 +10,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.core.app.ActivityCompat
+import androidx.lifecycle.LiveData
 import androidx.navigation.fragment.navArgs
 import com.google.android.gms.location.*
 import com.google.android.gms.maps.CameraUpdateFactory
@@ -24,10 +25,7 @@ import com.technipixl.filrouge.DBFood.Database.DatabaseFood
 import com.technipixl.filrouge.DBFood.model.BusineseDb
 import com.technipixl.filrouge.Model.Businesse
 import com.technipixl.filrouge.databinding.FragmentDetailFoodBinding
-import kotlinx.coroutines.CoroutineScope
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.coroutineScope
-import kotlinx.coroutines.launch
+import kotlinx.coroutines.*
 import kotlin.math.roundToInt
 
 
@@ -103,6 +101,9 @@ class DetailFoodFragment : Fragment() {
         binding.addFavoriteType.setOnClickListener {
 
             val result = BusinesseMapper().transformToBusineseDb(args.business)
+           recuplistDb(result)
+
+
 
         }
     }
@@ -123,17 +124,37 @@ class DetailFoodFragment : Fragment() {
             .icon(BitmapDescriptorFactory.fromResource(R.drawable.ico_pin_pizza))
         map.addMarker(markerOptions)
     }
+    @SuppressLint("SetTextI18n")
     private fun addFavorite(args: DetailFoodFragmentArgs) {
         binding.ratingbar.rating = args.business.rating.toFloat()
         binding.addressTextDetail.text = args.business.location.address1
         binding.villeZip.text = args.business.location.city + " " +args.business.location.state+" "+ args.business.location.zip_code
 
     }
-    private fun recuplistDb(): List<BusineseDb>? {
-        DatabaseFood.getDb(requireContext()).foodDao().getFavoriteFoodBusi().observe(viewLifecycleOwner) { listDb ->
-            val listBusiDb = listDb
-            return listBusiDb
+    private fun recuplistDb(busineseDb: BusineseDb) {
+        CoroutineScope(Dispatchers.IO).launch {
+            val resultDb =  DatabaseFood.getDb(requireContext()).foodDao().getFavoriteFoodBusi()
+
+            withContext(Dispatchers.Main){
+                var reponse :Boolean = false
+                resultDb.forEach {
+                    reponse = it.id == busineseDb.id
+                }
+                if (!reponse){
+                    withContext(Dispatchers.IO){
+                        DatabaseFood.getDb(requireContext()).foodDao().insertDataFood(busineseDb)
+                    }
+                }
+                else {
+                    withContext(Dispatchers.IO){
+                        DatabaseFood.getDb(requireContext()).foodDao().deleteById(busineseDb.id)
+                    }
+                }
+
+            }
+
         }
+
     }
 
 }
