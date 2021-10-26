@@ -5,23 +5,28 @@
         android:id="@+id/homeFragment"
         android:title="@string/home_menu_title"
         android:icon="@drawable/ico_house_white"
-        app:showAsAction="ifRoom|withText"/>
+        app:showAsAction="ifRoom|withText"
+        android:iconTint="@color/white"
+        />
 
     <item
         android:id="@+id/foodFragment"
         android:title="@string/food_menu_title"
         android:icon="@drawable/ico_pizza_white"
-        app:showAsAction="ifRoom|withText"/>
+        app:showAsAction="ifRoom|withText"
+        android:iconTint="@color/white"/>
 
     <item
         android:id="@+id/funFragment"
         android:title="@string/fun_menu_title"
         android:icon="@drawable/ico_laugh_white"
-        app:showAsAction="ifRoom|withText"/>
+        app:showAsAction="ifRoom|withText"
+        android:iconTint="@color/white"/>
 
     <item
         android:id="@+id/MoveFragment"
         android:title="@string/move_menu_title"
         android:icon="@drawable/ico_car_white"
-        app:showAsAction="ifRoom|withText"/>
+        app:showAsAction="ifRoom|withText"
+        android:iconTint="@color/white"/>
 </menu>

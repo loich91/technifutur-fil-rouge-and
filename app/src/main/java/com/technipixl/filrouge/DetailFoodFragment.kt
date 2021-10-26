@@ -14,10 +14,7 @@ import androidx.lifecycle.LiveData
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
 import com.google.android.gms.location.*
-import com.google.android.gms.maps.CameraUpdateFactory
-import com.google.android.gms.maps.GoogleMap
-import com.google.android.gms.maps.OnMapReadyCallback
-import com.google.android.gms.maps.SupportMapFragment
+import com.google.android.gms.maps.*
 import com.google.android.gms.maps.model.BitmapDescriptorFactory
 import com.google.android.gms.maps.model.LatLng
 import com.google.android.gms.maps.model.LatLngBounds
@@ -69,11 +66,6 @@ class DetailFoodFragment : Fragment() {
         fusedLocationClient.requestLocationUpdates(request, locationCallback, Looper.getMainLooper())
 
     }
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-
-
-    }
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -119,6 +111,7 @@ class DetailFoodFragment : Fragment() {
         val height = resources.displayMetrics.heightPixels
         val  padding =  (width * 0.10) .toInt()
         map.moveCamera(CameraUpdateFactory.newLatLngBounds(boundBuild.build(),width, height, padding))
+        map.moveCamera(CameraUpdateFactory.newLatLngZoom(coord,15F))
     }
     private fun addMarker(latitude: Double, longitude: Double, title: String) {
         val markerOptions = MarkerOptions().position(LatLng(latitude, longitude))
@@ -127,14 +120,6 @@ class DetailFoodFragment : Fragment() {
         map.addMarker(markerOptions)
     }
     @SuppressLint("SetTextI18n")
-    /*
-    private fun addFavorite(args: DetailFoodFragmentArgs) {
-        binding.ratingbar.rating = args.business.rating.toFloat()
-        binding.addressTextDetail.text = args.business.location.address1
-        binding.villeZip.text = args.business.location.city + " " +args.business.location.state+" "+ args.business.location.zip_code
-
-    }
-     */
     private fun recuplistDb(busineseDb: BusineseDb) {
         CoroutineScope(Dispatchers.IO).launch {
             val resultDb =  DatabaseFood.getDb(requireContext()).foodDao().getFavoriteFoodBusi()

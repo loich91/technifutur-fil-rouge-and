@@ -47,6 +47,8 @@ class FoodFragment : Fragment(),FoodAdapter.OnclickFoodListener {
                 centerMap(location.latitude,location.longitude)
                 setupyelpdata(location.latitude,location.longitude)
                 binding.btn1SelectionFood.setOnClickListener {
+                    fusedLocationClient.removeLocationUpdates(this)
+                    centerMap(location.latitude,location.longitude)
                     binding.btn1SelectionFood.background = ResourcesCompat.getDrawable(resources, R.drawable.background_button, null)
                     binding.btn2SelectionFoodFavorite.background = null
                     binding.btn2SelectionFoodFavorite.setTextColor(ContextCompat.getColor(requireContext(),R.color.black))
@@ -55,8 +57,8 @@ class FoodFragment : Fragment(),FoodAdapter.OnclickFoodListener {
 
                 }
                 binding.btn2SelectionFoodFavorite.setOnClickListener {
-
-
+                    fusedLocationClient.removeLocationUpdates(this)
+                    centerMap(location.latitude,location.longitude)
                     binding.btn2SelectionFoodFavorite.background = ResourcesCompat.getDrawable(resources, R.drawable.background_button, null)
                     binding.btn1SelectionFood.background = null
                     binding.btn2SelectionFoodFavorite.setTextColor(ContextCompat.getColor(requireContext(),R.color.pink))
@@ -89,7 +91,7 @@ class FoodFragment : Fragment(),FoodAdapter.OnclickFoodListener {
         }
 
         val request = LocationRequest.create()
-        request.interval = 1000
+        request.interval = 500
         request.priority = LocationRequest.PRIORITY_HIGH_ACCURACY
         fusedLocationClient = LocationServices.getFusedLocationProviderClient(requireActivity())
         fusedLocationClient.requestLocationUpdates(request, locationCallback, Looper.getMainLooper())
@@ -124,7 +126,7 @@ class FoodFragment : Fragment(),FoodAdapter.OnclickFoodListener {
 
         val fragment = childFragmentManager.findFragmentById(R.id.fragmentContainerViewMap) as SupportMapFragment?
         fragment?.getMapAsync(OnMapReadyCallback{
-            it.moveCamera(CameraUpdateFactory.newLatLng(LatLng(latitude,longitude)))
+            it.moveCamera(CameraUpdateFactory.newLatLngZoom(LatLng(latitude,longitude),10F))
         })
     }
     fun addMarquer(response:List<Businesse>){
@@ -138,10 +140,6 @@ class FoodFragment : Fragment(),FoodAdapter.OnclickFoodListener {
             addMarker(lat,long,title)
             boundBuild.include(coord)
         }
-       val width = resources.displayMetrics.widthPixels
-        val height = resources.displayMetrics.heightPixels
-       val  padding =  (width * 0.20) .toInt()
-        map.moveCamera(CameraUpdateFactory.newLatLngBounds(boundBuild.build(),width, height, padding))
     }
     private fun addMarker(latitude: Double, longitude: Double, title: String) {
         val markerOptions = MarkerOptions().position(LatLng(latitude, longitude))
