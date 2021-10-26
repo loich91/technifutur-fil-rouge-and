@@ -13,4 +13,8 @@
     <color name="ligth_grey">#ececf5</color>
     <color name="themec_color">#000c37</color>
     <color name="blueMenu">#1C2768</color>
+    <color name="green_gradient_start">#00cdac</color>
+    <color name="green_gradient_end">#02aab0</color>
+    <color name="dark_blue">#000c37</color>
+    <color name="medium_blue">#001251</color>
 </resources>

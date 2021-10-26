@@ -19,8 +19,9 @@
             android:id="@+id/text1"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_margin="10dp"
-
+            android:layout_margin="10sp"
+            android:textStyle="bold"
+            android:textSize="18sp"
             android:layout_marginTop="16dp"
             app:layout_constraintBottom_toTopOf="@+id/imageButton2"
             app:layout_constraintTop_toTopOf="parent"
@@ -34,7 +35,8 @@
             android:src="@drawable/play_button"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
-            android:backgroundTint="@color/white"/>
+            android:backgroundTint="@color/white"
+            android:contentDescription="@string/play_read" />
 
         <ImageButton
             android:id="@+id/imageButtonShare"
@@ -44,7 +46,8 @@
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toStartOf="@+id/imageButton2"
             app:layout_constraintTop_toTopOf="@+id/imageButton2"
-            android:backgroundTint="@color/white"/>
+            android:backgroundTint="@color/white"
+            android:contentDescription="@string/share" />
 
 
 

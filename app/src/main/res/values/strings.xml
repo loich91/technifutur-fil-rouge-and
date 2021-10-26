@@ -17,4 +17,6 @@
     <string name="coucou_text">Coucou</string>
     <string name="autour_de_moi">autour de moi</string>
     <string name="favoris">favoris</string>
+    <string name="play_read">play read</string>
+    <string name="share">share</string>
 </resources>
