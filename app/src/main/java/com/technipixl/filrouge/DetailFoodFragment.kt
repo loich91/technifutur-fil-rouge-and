@@ -102,6 +102,7 @@ class DetailFoodFragment : Fragment() {
         binding.addFavoriteType.setOnClickListener {
 
             val result = BusinesseMapper().transformToBusineseDb(args.business)
+
            recuplistDb(result)
 
 
@@ -126,12 +127,14 @@ class DetailFoodFragment : Fragment() {
         map.addMarker(markerOptions)
     }
     @SuppressLint("SetTextI18n")
+    /*
     private fun addFavorite(args: DetailFoodFragmentArgs) {
         binding.ratingbar.rating = args.business.rating.toFloat()
         binding.addressTextDetail.text = args.business.location.address1
         binding.villeZip.text = args.business.location.city + " " +args.business.location.state+" "+ args.business.location.zip_code
 
     }
+     */
     private fun recuplistDb(busineseDb: BusineseDb) {
         CoroutineScope(Dispatchers.IO).launch {
             val resultDb =  DatabaseFood.getDb(requireContext()).foodDao().getFavoriteFoodBusi()
@@ -139,7 +142,7 @@ class DetailFoodFragment : Fragment() {
             withContext(Dispatchers.Main){
                 var reponse :Boolean = false
                 resultDb.forEach {
-                    reponse = it.id == busineseDb.id
+                    reponse = it.id == busineseDb.id && true
                 }
                 if (!reponse){
                     withContext(Dispatchers.IO){

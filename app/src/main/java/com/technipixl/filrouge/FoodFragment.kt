@@ -171,10 +171,10 @@ class FoodFragment : Fragment(),FoodAdapter.OnclickFoodListener {
         DatabaseFood.getDb(requireContext()).foodDao().getFavoriteFood().observe(viewLifecycleOwner){listDb->
 
 
-            var listbusi = listDb.map { BusinesseMapper().transfortoBusinesse(it) }
+            val listbusi = listDb.map { BusinesseMapper().transfortoBusinesse(it) }
             binding.recyclerView.layoutManager = LinearLayoutManager(requireContext(),LinearLayoutManager.VERTICAL,false)
             binding.recyclerView.adapter =  FoodAdapter(listbusi,this@FoodFragment)
-            if (listbusi.isNotEmpty() == true){
+            if (listbusi.isNotEmpty()){
                 map.clear()
                 addMarquer(listbusi)
             }
