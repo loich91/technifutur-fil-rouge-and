@@ -16,5 +16,11 @@ interface ConnexionYelp {
         @Query("longitude",encoded = false)longitude:Double,
         @Query("limit",encoded = false)limit:Int
     ):Response<DataYelp>
+    suspend fun parc(
+        @Query("latitude",encoded = false)latitude:Double,
+        @Query("longitude",encoded = false)longitude:Double,
+        @Query("limit",encoded = false)limit:Int,
+        @Query("term",encoded = false)term:String
+    ):Response<DataYelp>
 
 }

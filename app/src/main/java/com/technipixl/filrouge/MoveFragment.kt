@@ -5,11 +5,11 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-
+import com.technipixl.filrouge.databinding.FragmentMoveBinding
 
 
 class MoveFragment : Fragment() {
-
+    private lateinit var binding: FragmentMoveBinding
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
     }
@@ -18,8 +18,8 @@ class MoveFragment : Fragment() {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_move, container, false)
+        binding = FragmentMoveBinding.inflate(layoutInflater)
+        return binding.root
     }
 
 
