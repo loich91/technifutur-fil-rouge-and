@@ -111,7 +111,7 @@ class DetailFoodFragment : Fragment() {
         val height = resources.displayMetrics.heightPixels
         val  padding =  (width * 0.10) .toInt()
         map.moveCamera(CameraUpdateFactory.newLatLngBounds(boundBuild.build(),width, height, padding))
-        map.moveCamera(CameraUpdateFactory.newLatLngZoom(coord,15F))
+        map.moveCamera(CameraUpdateFactory.newLatLngZoom(coord,17F))
     }
     private fun addMarker(latitude: Double, longitude: Double, title: String) {
         val markerOptions = MarkerOptions().position(LatLng(latitude, longitude))

@@ -26,12 +26,14 @@
         android:id="@+id/bottomNavigationView"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:background="#1C2768"
+        android:background="@color/blueMenu"
         app:labelVisibilityMode="labeled"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:menu="@menu/nav_menu"
+        app:itemTextColor="@drawable/bottomnav_item_color"
+        app:itemIconTint="@drawable/bottomnav_item_color"
 
         />
 

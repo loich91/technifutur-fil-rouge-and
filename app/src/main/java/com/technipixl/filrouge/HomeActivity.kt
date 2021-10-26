@@ -18,14 +18,18 @@ class HomeActivity : AppCompatActivity() {
         binding = ActivityHomeBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
+
     }
+
     override fun onPostCreate(savedInstanceState: Bundle?) {
         super.onPostCreate(savedInstanceState)
         navController = Navigation.findNavController(this, binding.navHostFragment.id)
         setupBottomNavigation()
     }
+
     private fun setupBottomNavigation() {
         NavigationUI.setupWithNavController(binding.bottomNavigationView, navController)
+
     }
 
     override fun onRequestPermissionsResult(
