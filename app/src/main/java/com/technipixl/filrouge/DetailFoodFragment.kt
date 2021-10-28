@@ -9,9 +9,8 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
 import androidx.core.app.ActivityCompat
-import androidx.lifecycle.LiveData
-import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
 import com.google.android.gms.location.*
 import com.google.android.gms.maps.*
@@ -21,10 +20,8 @@ import com.google.android.gms.maps.model.LatLngBounds
 import com.google.android.gms.maps.model.MarkerOptions
 import com.technipixl.filrouge.DBFood.Database.DatabaseFood
 import com.technipixl.filrouge.DBFood.model.BusineseDb
-import com.technipixl.filrouge.Model.Businesse
 import com.technipixl.filrouge.databinding.FragmentDetailFoodBinding
 import kotlinx.coroutines.*
-import kotlin.math.roundToInt
 
 
 class DetailFoodFragment : Fragment() {
@@ -34,7 +31,7 @@ class DetailFoodFragment : Fragment() {
     private lateinit var fusedLocationClient: FusedLocationProviderClient
     private  var locationCallback: LocationCallback =object : LocationCallback(){
         override fun onLocationResult(locationResult: LocationResult?) {
-            locationResult?.lastLocation?.let {location->
+            locationResult?.lastLocation?.let {
                 fusedLocationClient.removeLocationUpdates(this)
                 addMarquer(args.business.coordinates.latitude,args.business.coordinates.longitude,args.business.name)
 
@@ -87,13 +84,14 @@ class DetailFoodFragment : Fragment() {
         binding.addressTextDetail.text = args.business.location.address1
         binding.villeZip.text = args.business.location.city + " " +args.business.location.state+" "+ args.business.location.zip_code
         val fragment = childFragmentManager.findFragmentById(R.id.fragmentContainerViewMapDetail) as SupportMapFragment?
-        fragment?.getMapAsync(OnMapReadyCallback{
+        fragment?.getMapAsync {
             map = it
             tacklocation()
-        })
+        }
         binding.addFavoriteType.setOnClickListener {
 
             val result = BusinesseMapper().transformToBusineseDb(args.business)
+
 
            recuplistDb(result)
 
@@ -125,7 +123,7 @@ class DetailFoodFragment : Fragment() {
             val resultDb =  DatabaseFood.getDb(requireContext()).foodDao().getFavoriteFoodBusi()
 
             withContext(Dispatchers.Main){
-                var reponse :Boolean = false
+                var reponse = false
                 resultDb.forEach {
                     reponse = it.id == busineseDb.id && true
                 }
@@ -133,12 +131,16 @@ class DetailFoodFragment : Fragment() {
                     withContext(Dispatchers.IO){
                         DatabaseFood.getDb(requireContext()).foodDao().insertDataFood(busineseDb)
                     }
+                    val toast = Toast.makeText(requireContext(), "ajout aux favoris",Toast.LENGTH_SHORT)
+                    toast.show()
+
                 }
                 else {
                     withContext(Dispatchers.IO){
                         DatabaseFood.getDb(requireContext()).foodDao().deleteById(busineseDb.id)
-
                     }
+                    val toast = Toast.makeText(requireContext(), "suppression des favoris aux favoris",Toast.LENGTH_SHORT)
+                    toast.show()
                 }
 
             }

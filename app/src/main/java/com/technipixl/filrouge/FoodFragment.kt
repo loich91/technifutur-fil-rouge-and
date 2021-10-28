@@ -45,7 +45,14 @@ class FoodFragment : Fragment(),FoodAdapter.OnclickFoodListener {
             locationResult?.lastLocation?.let {location->
                 fusedLocationClient.removeLocationUpdates(this)
                 centerMap(location.latitude,location.longitude)
+
+
+
+
                 setupyelpdata(location.latitude,location.longitude)
+
+
+
                 binding.btn1SelectionFood.setOnClickListener {
                     fusedLocationClient.removeLocationUpdates(this)
                     centerMap(location.latitude,location.longitude)
@@ -54,7 +61,6 @@ class FoodFragment : Fragment(),FoodAdapter.OnclickFoodListener {
                     binding.btn2SelectionFoodFavorite.setTextColor(ContextCompat.getColor(requireContext(),R.color.black))
                     binding.btn1SelectionFood.setTextColor(ContextCompat.getColor(requireContext(),R.color.pink))
                     setupyelpdata(location.latitude,location.longitude)
-
                 }
                 binding.btn2SelectionFoodFavorite.setOnClickListener {
                     fusedLocationClient.removeLocationUpdates(this)

@@ -9,9 +9,9 @@ import com.technipixl.filrouge.UI.HomeFragViewer
 
 class HomeAdapter (activity:FragmentActivity, private val listener:HomeFragViewer.HomeFragClickListener):FragmentStateAdapter(activity) {
     private val fragments = mutableListOf<HomeFragViewer>().apply {
-        add(HomeFragViewer.newInstance(R.drawable.wolf, "J\\'ai une faim de loup !", 1, listener))
+        add(HomeFragViewer.newInstance(R.drawable.wolf, "J'ai une faim de loup !", 1, listener))
         add(HomeFragViewer.newInstance(R.drawable.`fun`, "jsuis en dep!", 2, listener))
-        add(HomeFragViewer.newInstance(R.drawable.run, "Faut qu\\'jme bouge !", 3, listener))
+        add(HomeFragViewer.newInstance(R.drawable.run, "Faut qu'jme bouge !", 3, listener))
     }
     override fun getItemCount(): Int {
     return fragments.count()

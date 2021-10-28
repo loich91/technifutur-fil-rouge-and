@@ -28,7 +28,11 @@
         android:id="@+id/MoveFragment"
         android:name="com.technipixl.filrouge.MoveFragment"
         android:label="fragment_move"
-        tools:layout="@layout/fragment_move" />
+        tools:layout="@layout/fragment_move" >
+        <action
+            android:id="@+id/action_MoveFragment_to_detailFoodFragment"
+            app:destination="@id/detailFoodFragment" />
+    </fragment>
     <fragment
         android:id="@+id/detailFoodFragment"
         android:name="com.technipixl.filrouge.DetailFoodFragment"

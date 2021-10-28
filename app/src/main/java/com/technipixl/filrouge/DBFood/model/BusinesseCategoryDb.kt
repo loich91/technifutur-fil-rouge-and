@@ -6,7 +6,6 @@ import com.technipixl.filrouge.Model.Businesse
 
 @Entity(primaryKeys = ["idDb","idCat"])
 class BusinesseCategoryDb (
-
     val idDb:Int,
     val idCat:Int
         )

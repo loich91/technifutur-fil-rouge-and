@@ -12,12 +12,12 @@ import com.technipixl.filrouge.Model.Location
 
 open class BusinesseMapper  {
     fun transfortoBusinesse (buisenessDb:BusinesswithCategory) : Businesse {
-        val category = mutableListOf<Category>()
+        val categorie = mutableListOf<Category>()
             buisenessDb.category.forEach {
-                category.add(Category(it.alias,it.title))
+                categorie.add(Category(it.alias,it.title))
             }
 
-
+        val cat =  categorie.toList()
         return Businesse(
             id = buisenessDb.businesse.id,
             alias = buisenessDb.businesse.alias ?: "",
@@ -40,11 +40,11 @@ open class BusinesseMapper  {
             url = buisenessDb.businesse.url ?: "",
             coordinates = Coordinates(
                 latitude = buisenessDb.businesse.coordinates?.latitude!!,
-                longitude = buisenessDb.businesse.coordinates?.longitude!!
+                longitude = buisenessDb.businesse.coordinates.longitude!!
             ),
-            distance = 0.0,
+            distance = buisenessDb.businesse.distance!!,
             is_closed = false,
-            categories = category
+            categories = cat
 
         )
 
@@ -69,7 +69,7 @@ open class BusinesseMapper  {
          review_count=businesse.review_count,
          url=businesse.url,
          location= LocationDb(
-             address1 = businesse.location!!.address1 ?: "",
+             address1 = businesse.location.address1 ?: "",
              address2 = businesse.location.address2 ?: "",
              address3 = businesse.location.address3 ?: "",
              city = businesse.location.city ?: "",
@@ -78,8 +78,8 @@ open class BusinesseMapper  {
              zip_code = businesse.location.zip_code ?: "",
          ),
          coordinates= CoordinateDb(
-             latitude = businesse.coordinates?.latitude!!,
-             longitude = businesse.coordinates?.longitude!!
+             latitude = businesse.coordinates.latitude,
+             longitude = businesse.coordinates.longitude
          )
         )
 
