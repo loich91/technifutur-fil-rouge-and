@@ -24,6 +24,7 @@ import com.google.android.gms.maps.model.BitmapDescriptorFactory
 import com.google.android.gms.maps.model.LatLng
 import com.google.android.gms.maps.model.LatLngBounds
 import com.google.android.gms.maps.model.MarkerOptions
+import com.technipixl.filrouge.DBFood.Database.DatabaseFood
 import com.technipixl.filrouge.Model.Businesse
 import com.technipixl.filrouge.UI.ConnexionYelpImpl
 import com.technipixl.filrouge.UI.FoodAdapter
@@ -48,6 +49,24 @@ class MoveFragment : Fragment(),FoodAdapter.OnclickFoodListener {
                 centerMap(location.latitude,location.longitude)
                 setupyelpdata(location.latitude,location.longitude)
 
+                binding.btn1SelectionFood.setOnClickListener {
+                    fusedLocationClient.removeLocationUpdates(this)
+                    centerMap(location.latitude,location.longitude)
+                    binding.btn1SelectionFood.background = ResourcesCompat.getDrawable(resources, R.drawable.background_button, null)
+                    binding.btn2SelectionFoodFavorite.background = null
+                    binding.btn2SelectionFoodFavorite.setTextColor(ContextCompat.getColor(requireContext(),R.color.black))
+                    binding.btn1SelectionFood.setTextColor(ContextCompat.getColor(requireContext(),R.color.pink))
+                    setupyelpdata(location.latitude,location.longitude)
+                }
+                binding.btn2SelectionFoodFavorite.setOnClickListener {
+                    fusedLocationClient.removeLocationUpdates(this)
+                    centerMap(location.latitude,location.longitude)
+                    binding.btn2SelectionFoodFavorite.background = ResourcesCompat.getDrawable(resources, R.drawable.background_button, null)
+                    binding.btn1SelectionFood.background = null
+                    binding.btn2SelectionFoodFavorite.setTextColor(ContextCompat.getColor(requireContext(),R.color.pink))
+                    binding.btn1SelectionFood.setTextColor(ContextCompat.getColor(requireContext(),R.color.black))
+                    setupDbyelpDataDb()
+                }
             }
         }
     }
@@ -118,7 +137,7 @@ class MoveFragment : Fragment(),FoodAdapter.OnclickFoodListener {
     fun setupyelpdata(latitude: Double, longitude: Double) {
 
         CoroutineScope(Dispatchers.IO).launch {
-            val response = conn.getPark(latitude, longitude, 20, )
+            val response = conn.getPark(latitude, longitude, 20)
             withContext(Dispatchers.Main) {
                 if (response.isSuccessful) {
 
@@ -153,9 +172,28 @@ class MoveFragment : Fragment(),FoodAdapter.OnclickFoodListener {
             .icon(BitmapDescriptorFactory.fromResource(R.drawable.ico_pin_pizza))
         map.addMarker(markerOptions)
     }
+    fun setupDbyelpDataDb(){
+        DatabaseFood.getDb(requireContext()).foodDao().getFavoriteFood(1).observe(viewLifecycleOwner){ listDb->
+
+
+            val listbusi = listDb.map { BusinesseMapper().transfortoBusinesse(it) }
+            binding.recyclerView.layoutManager = LinearLayoutManager(requireContext(),LinearLayoutManager.VERTICAL,false)
+            binding.recyclerView.adapter =  FoodAdapter(listbusi,this@MoveFragment)
+            if (listbusi.isNotEmpty()){
+                map.clear()
+                addMarquer(listbusi)
+            }
+            else {
+                map.clear()
+
+            }
+
+        }
+
+    }
 
     override fun onclickFoodListener(businesse: Businesse) {
-        val action = MoveFragmentDirections.actionMoveFragmentToDetailFoodFragment(businesse)
+        val action = MoveFragmentDirections.actionMoveFragmentToDetailFoodFragment(businesse,1)
         findNavController().navigate(action)
     }
 }

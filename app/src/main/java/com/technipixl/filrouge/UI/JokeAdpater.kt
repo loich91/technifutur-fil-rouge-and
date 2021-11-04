@@ -25,7 +25,7 @@ private var colorRandom = mutableListOf(
     R.color.green_gradient_end,
     R.color.dark_blue,
     R.color.medium_blue,
-    R.color.black
+    R.color.black,
 )
 class JokeAdpater (val jokelist:List<ChuckData>):RecyclerView.Adapter<JokeAdpater.JokeViewHolder>() {
     class JokeViewHolder(viewBinding: ViewBinding,@ColorInt val textColor: Int):RecyclerView.ViewHolder(viewBinding.root),TextToSpeech.OnInitListener {

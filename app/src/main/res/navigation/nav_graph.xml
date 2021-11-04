@@ -41,5 +41,8 @@
         <argument
             android:name="business"
             app:argType="com.technipixl.filrouge.Model.Businesse" />
+        <argument
+            android:name="page"
+            app:argType="integer" />
     </fragment>
 </navigation>

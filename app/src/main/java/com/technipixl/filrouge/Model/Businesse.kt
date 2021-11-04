@@ -19,5 +19,6 @@ data class Businesse(
     val price: String,
     val rating: Double,
     val review_count: Int,
-    val url: String
+    val url: String,
+    //val choiceNumber :Int=0,
 ) : Parcelable

@@ -8,8 +8,8 @@ import com.technipixl.filrouge.DBFood.model.CategoryDb
 
 @Dao
 interface FoodDao {
-    @Query("Select * From BusineseDb")
-    fun getFavoriteFood(): LiveData<List<BusinesswithCategory>>
+    @Query("Select * From BusineseDb WHERE choiceNumber = :choiceNumber")
+    fun getFavoriteFood(choiceNumber:Int): LiveData<List<BusinesswithCategory>>
     @Query("Select * From BusineseDb")
     suspend fun getFavoriteFoodBusi(): List<BusineseDb>
 

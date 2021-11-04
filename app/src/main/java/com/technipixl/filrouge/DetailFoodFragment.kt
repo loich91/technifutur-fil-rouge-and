@@ -90,13 +90,8 @@ class DetailFoodFragment : Fragment() {
         }
         binding.addFavoriteType.setOnClickListener {
 
-            val result = BusinesseMapper().transformToBusineseDb(args.business)
-
-
+            val result = BusinesseMapper().transformToBusineseDb(args.business,args.page)
            recuplistDb(result)
-
-
-
         }
     }
     fun addMarquer(latitude: Double,longitude: Double,title: String){

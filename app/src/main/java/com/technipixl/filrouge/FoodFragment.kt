@@ -45,10 +45,6 @@ class FoodFragment : Fragment(),FoodAdapter.OnclickFoodListener {
             locationResult?.lastLocation?.let {location->
                 fusedLocationClient.removeLocationUpdates(this)
                 centerMap(location.latitude,location.longitude)
-
-
-
-
                 setupyelpdata(location.latitude,location.longitude)
 
 
@@ -172,7 +168,7 @@ class FoodFragment : Fragment(),FoodAdapter.OnclickFoodListener {
     }
 
     fun setupDbyelpDataDb(){
-        DatabaseFood.getDb(requireContext()).foodDao().getFavoriteFood().observe(viewLifecycleOwner){listDb->
+        DatabaseFood.getDb(requireContext()).foodDao().getFavoriteFood(0).observe(viewLifecycleOwner){listDb->
 
 
             val listbusi = listDb.map { BusinesseMapper().transfortoBusinesse(it) }
@@ -192,7 +188,7 @@ class FoodFragment : Fragment(),FoodAdapter.OnclickFoodListener {
     }
 
     override fun onclickFoodListener(businesse: Businesse) {
-        val action = FoodFragmentDirections.actionFoodFragmentToDetailFoodFragment(businesse)
+        val action = FoodFragmentDirections.actionFoodFragmentToDetailFoodFragment(businesse,0)
         findNavController().navigate(action)
     }
 

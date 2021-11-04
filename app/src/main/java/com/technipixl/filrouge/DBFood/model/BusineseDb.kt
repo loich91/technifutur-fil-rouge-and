@@ -3,13 +3,10 @@ package com.technipixl.filrouge.DBFood.model
 import androidx.room.Embedded
 import androidx.room.Entity
 import androidx.room.PrimaryKey
-import com.technipixl.filrouge.Model.Category
-import com.technipixl.filrouge.Model.Coordinates
-import com.technipixl.filrouge.Model.Location
 
 @Entity
 
-class BusineseDb (
+class BusineseDb(
     @PrimaryKey(autoGenerate = true)
     val idDb:Int,
     val id: String,
@@ -24,6 +21,7 @@ class BusineseDb (
     val rating: Double?,
     val review_count: Int?,
     val url: String?,
+    val choiceNumber: Int?,
 
     @Embedded val location: LocationDb?,
     @Embedded val coordinates: CoordinateDb?
